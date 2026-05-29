@@ -9,3 +9,13 @@
 - What are dependencies
 - What is the use of "-g" while npm install
 - Difference between caret and tilde (^ vs ~)
+
+- Is route order matters?
+- Difference between package.json and package-lock.json
+- Difference between app.use(), app.get(), app.post() etc
+
+- Created .gitignore file
+- Push all code to remote origin
+- Play with routes
+- Install postman
+- Created different routes GET, POST, PATCH, DELETE api calls
