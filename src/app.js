@@ -2,24 +2,19 @@ const express = require('express');
 
 const app = express();
 
-app.use("/", (req, res)=>{
-    res.send("Hello Node js");
+// Matches /ab or /abc  ---  {}. use for optional
+app.get("/a{b}c", (req, res)=> {
+    res.send("{} Matches /ab, /abc")
 })
 
-app.use("/test", (req, res)=> {
-    res.send("TEST Test")
+// Makes 'b' repeatable (0 or more times)
+app.get("/ab*c", (req, res) => {
+    res.send("*Matches: ac, abc, abbc, abbbc...")
 })
 
-app.get("/user", (req, res)=> {
-    res.send("USER USER")
-})
-
-app.post("/user/2", (req, res)=>{
-    res.send("2-User posted")
-})
-
-app.delete("/user/2", (req, res)=>{
-    res.send("2-User deleted")
+// Makes 'y' required (1 or more times)
+app.get("/xy:z", (req, res) => {
+    res.send("+Matches: xyz, xyyz, xyyyz...")
 })
 
 app.listen(7070, ()=> {

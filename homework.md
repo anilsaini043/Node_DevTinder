@@ -19,3 +19,4 @@
 - Play with routes
 - Install postman
 - Created different routes GET, POST, PATCH, DELETE api calls
+- Working with optional {}, *, + routes
