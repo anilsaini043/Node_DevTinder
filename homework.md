@@ -20,3 +20,8 @@
 - Install postman
 - Created different routes GET, POST, PATCH, DELETE api calls
 - Working with optional {}, *, + routes
+- Reading the dynamic routes
+- Multiple Routes handlers
+- next()
+- next funtion and errors along  with res.send()
+- app.use("/route", handler-1, handler-2, handler-3, handler-4, handler-5)
