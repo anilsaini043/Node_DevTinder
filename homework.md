@@ -25,3 +25,8 @@
 - next()
 - next funtion and errors along  with res.send()
 - app.use("/route", handler-1, handler-2, handler-3, handler-4, handler-5)
+
+- What is middleware
+- How express.js basically handles requests behind the scenes
+- Difference between app.use() and app.all()
+- Write a dummy auth for admin/user middleware

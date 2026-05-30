@@ -1,104 +1,28 @@
 const express = require("express");
+const { adminAuth, userAuth } = require("./middlewares/auth.js")
 
 const app = express();
 
-// app.use("/product/123", (req,res)=>{
-//     console.log(req.query)
-// })
-// app.use("/product/:id", (req,res)=>{
-//     console.log(req.params)
-// })
+// Handle Auth midlleware for all GET, POST, DELETE, PATCH ... PUT requests
+app.use("/admin", adminAuth);
+app.use("/user", userAuth);
 
-app.use(
-  "/test",
-  (req, res, next) => {
-    // Route handler
-    // res.send("1")
-    next();
-  },
-  (req, res) => {
-    res.send("2");
-  },
-);
+// Admin routes
+app.get("/admin/getAdminData", (req, res) => {
+    res.send("Admin data sent");
+});
 
-//
-app.use(
-  "/home",
-  (req, res) => {
-    res.send("1");
-    next();
-  },
-  (req, res) => {
-    res.send("2");
-  },
-);
+app.get("/admin/deleteAdmin", (req, res) => {
+    res.send("Admin Deleted");
+});
 
-//
-app.use(
-  "/name",
-  (req, res, next) => {
-    next();
-    res.send("1");
-  }, 
-  (req, res) => {
-    res.send("2");
-  },
-);
-
-//
-app.use(
-  "/user",
-  (req, res, next) => {
-    next();
-  },
-  (req, res) => {
-    res.send("Response-2");
-  },
-);
-
-//
-app.use(
-  "/about",
-  (req, res, next) => {
-    next();
-  },
-  (req, res, next) => {
-    next()
-  },
-  (req, res, next) => {
-    next()
-  },
-);
-
-//
-app.use(
-  "/demo",
-  (req, res, next) => {
-    next();
-  },
-  (req, res, next) => {
-    next()
-  },
-  (req, res, next) => {
-    next()
-  },
-  (req, res, next) => {
-    res.send("4")
-  },
-);
-
-
-// We can wrap multiple route handler inside array also
-
-// app.use("/route", handler-1, handler-2, handler-3, handler-4, handler-5)
-// // OR
-// app.use("/route", [handler-1, handler-2, handler-3, handler-4, handler-5])
-// // OR
-// app.use("/route", [handler-1, handler-2], handler-3, handler-4, handler-5)
-// // OR
-// app.use("/route", handler-1, handler-2, [handler-3, handler-4, handler-5])
-// // Or any other grouping
-
+// User routes
+app.get("/user/getUser", (req, res)=>{
+    res.send("User data sent")
+})
+app.post('/user/newUser', (req, res)=>{
+    res.send("New user created")
+})
 
 app.listen(7070, () => {
   console.log("Server is running on Port 7070.");
