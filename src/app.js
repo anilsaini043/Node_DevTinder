@@ -1,27 +1,17 @@
 const express = require("express");
-const { adminAuth, userAuth } = require("./middlewares/auth.js")
 
 const app = express();
 
-// Handle Auth midlleware for all GET, POST, DELETE, PATCH ... PUT requests
-app.use("/admin", adminAuth);
-app.use("/user", userAuth);
-
-// Admin routes
-app.get("/admin/getAdminData", (req, res) => {
-    res.send("Admin data sent");
-});
-
-app.get("/admin/deleteAdmin", (req, res) => {
-    res.send("Admin Deleted");
-});
-
-// User routes
-app.get("/user/getUser", (req, res)=>{
+app.get("/getUserData", (req, res, next)=>{
+    throw new Error("Failing....!");
     res.send("User data sent")
 })
-app.post('/user/newUser', (req, res)=>{
-    res.send("New user created")
+
+// Handle errors. ---  Order matters (err, req, res, next)
+app.use("/", (err, req, res, next)=>{
+    if(err){
+        res.status(500).send(`Something went wrong ---> ${err}`)
+    }
 })
 
 app.listen(7070, () => {
