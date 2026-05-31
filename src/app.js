@@ -1,8 +1,29 @@
 const express = require("express");
 const connectDB = require("./config/database.js");
+const User = require("./models/user.js");
 
 const app = express();
 
+// Signup API
+app.post("/signup", async (req, res)=>{
+    // Creating a new instance of the User model
+    const user = new User({
+        firstName: "Anil",
+        lastName: "Saini",
+        emailId: "anilsaini@gmail.com",
+        password: "anil@1992"
+    });
+    
+    try{
+        await user.save();
+        res.send("User added successfully...!")
+    }catch(err){
+        res.status(400).send("Error saving the user" + err.message)
+    }
+})
+
+
+// MongoDB connction
 connectDB()
   .then(() => {
     console.log("Database connection successfull...!!!");

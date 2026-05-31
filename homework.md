@@ -36,5 +36,9 @@
 - Create a free cluster on MongoDB official site
 - Install a mongoose library
 - Connect your application to the database "using connection url"
+- In mongo >>> Project → Cluster → Database → Collection → Documents
 - Call the connectDB function and connect to database before starting application on 7070
 - Create a userSchema and user Model
+- Create POST /signup API to add data to database
+- Push some documents using API calls from postman
+- Error handling using try and catch
