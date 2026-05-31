@@ -31,3 +31,10 @@
 - Difference between app.use() and app.all()
 - Write a dummy auth for admin/user middleware
 - Error handling using app.use("/", (err, req, res, next)=>{})
+
+- Signup on mongodb Atlas
+- Create a free cluster on MongoDB official site
+- Install a mongoose library
+- Connect your application to the database "using connection url"
+- Call the connectDB function and connect to database before starting application on 7070
+- Create a userSchema and user Model
