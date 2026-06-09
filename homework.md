@@ -46,3 +46,6 @@
 - JS object vs JSON (difference)
 - Add the express.json as middleware to our app
 -  Make your signup API dynamic to receive data from the end user
+- User.find() and User.findOne()
+- Get user by email id
+- Feed api - GET /feed - Get all the users from the database
