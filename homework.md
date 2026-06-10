@@ -49,3 +49,6 @@
 - User.find() and User.findOne()
 - Get user by email id
 - Feed api - GET /feed - Get all the users from the database
+- Created a delete user API
+- Created a update user API
+- Difference between patch and put method

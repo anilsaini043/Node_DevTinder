@@ -29,7 +29,7 @@ app.get("/user", async (req, res)=>{
       res.send(user)
     }
     // It will give all Matching records
-    
+
     // const users = await User.find({emailId: userEmail});
     // if(users.length === 0){
     //   res.status(404).send("User not found...!")
@@ -51,6 +51,29 @@ app.get("/feed", async (req, res)=>{
   }
 })
 
+// Delete user by userId. --> _id = userId
+app.delete("/delete", async (req, res)=> {
+  const userId = req.body.userId;
+  try{
+    await User.findByIdAndDelete(userId); // findByIdAndDelete({_id=userId}) or findByIdAndDelete(userId) both are same
+    res.send("User deleted successfully...!")
+  }catch(err){
+    res.status(400).send("Something went wrong...!")
+  }
+})
+
+// Update user 
+app.patch("/user", async (req, res)=> {
+  const userId = req.body.userId;
+  const updateData = req.body;
+  try{
+    await User.findByIdAndUpdate({_id: userId}, updateData);
+    res.send("User updated successfully...!")
+  }catch(err){
+    res.status(400).send("Something went wrong...!")
+  }
+})
+
 
 // MongoDB connction
 connectDB()
@@ -61,5 +84,5 @@ connectDB()
     });
   })
   .catch((err) => {
-    console.error("Database connection FAILED...!!!");
+    console.error("Database connection FAILED...!!!", err);
   });
