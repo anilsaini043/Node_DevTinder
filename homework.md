@@ -52,3 +52,10 @@
 - Created a delete user API
 - Created a update user API
 - Difference between patch and put method
+
+- Explore schema type options from the documentation
+- Add required, unique, lowercase, uppercase, minLength, maxLength, trim
+- Add default values
+- Created a custom validation function for gender
+- Improve the DB schema
+- Added timestamps to the userSchema (createdAt, updatedAt)
