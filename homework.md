@@ -59,3 +59,5 @@
 - Created a custom validation function for gender
 - Improve the DB schema
 - Added timestamps to the userSchema (createdAt, updatedAt)
+- Add userId in url for update
+- Data sanitization (validation and filteration)

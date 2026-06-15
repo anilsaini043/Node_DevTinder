@@ -37,6 +37,9 @@ const userSchema = new mongoose.Schema({
     job: {
         type: String,
         default: "I am an Application Developer"
+    },
+    photoUrl:{
+        type: String
     }
 }, {
     timestamps : true
