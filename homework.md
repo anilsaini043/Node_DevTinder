@@ -61,3 +61,5 @@
 - Added timestamps to the userSchema (createdAt, updatedAt)
 - Add userId in url for update
 - Data sanitization (validation and filteration)
+- Install validator library
+- Used validator function like- isEmail, isURL, isStrongPassword
