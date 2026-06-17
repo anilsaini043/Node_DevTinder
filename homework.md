@@ -67,3 +67,5 @@
 - Validate req.body data in signup API
 - Install bcrypt package
 - Created encrypt or hash password and install in DB
+- Created login API
+- Compare the login email and password
