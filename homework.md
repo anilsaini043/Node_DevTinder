@@ -63,3 +63,7 @@
 - Data sanitization (validation and filteration)
 - Install validator library
 - Used validator function like- isEmail, isURL, isStrongPassword
+
+- Validate req.body data in signup API
+- Install bcrypt package
+- Created encrypt or hash password and install in DB
