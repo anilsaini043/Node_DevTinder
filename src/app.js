@@ -5,6 +5,7 @@ const { validateSignUpData } = require("./utils/validation.js");
 const bcrypt = require("bcryptjs");
 const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
+const { userAuth } = require("./middlewares/auth.js");
 
 const app = express();
 app.use(express.json()); // req/ res reading
@@ -43,7 +44,7 @@ app.post("/login", async (req, res) => {
     const isPasswordMatch = await bcrypt.compare(password, user.password);
     if (isPasswordMatch) {
       // Create a JWT token
-      const token = jwt.sign({ _id: user._id }, "Secret@key");
+      const token = jwt.sign({ _id: user._id }, "Secret@key", {expiresIn : "7d"});
       // Add JWT token to cookie and send the response back to the user
       res.cookie("token", token);
       res.send("User logged In successfully");
@@ -101,24 +102,22 @@ app.delete("/delete", async (req, res) => {
 });
 
 // Profile api
-app.get("/profile", async (req, res) => {
+app.get("/profile", userAuth, async (req, res) => {
   try {
-    const cookie = req.cookies;
-    const { token } = cookie;
-    if(!token){
-      throw new Error("Invalid Token");
-    }
-    const decodeCookie = await jwt.verify(token, "Secret@key");
-    const {_id} = decodeCookie;
-    const user = await User.findById(_id);
-    if(!user){
-      throw new Error("User does not exist")
-    }
+    const user = req.user;
     res.send(user);
   } catch (err) {
     res.status(400).send("ERROR:-" + err.message);
   }
 });
+
+// Send connection request api
+app.post("/sendConnectionRequest", userAuth, async(req, res) => {
+  const user = req.user;
+  // Sending a connection request
+  console.log("Sending a connection request....");
+  res.send(user.firstName + " sent a connection request.")
+})
 
 // Update user
 app.patch("/user/:userId", async (req, res) => {
