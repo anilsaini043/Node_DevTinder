@@ -69,3 +69,10 @@
 - Created encrypt or hash password and install in DB
 - Created login API
 - Compare the login email and password
+
+- Install cookie-parser
+- Just send a dummy cookie to user
+- Created GET /profile API and check if you get the cookie back
+- Install jsonwebtoken
+- In login API,. after email and password validaton, crate a JWT token and send it to the user in cooie
+- Read the cookies inside your profile API and find the logged in user
