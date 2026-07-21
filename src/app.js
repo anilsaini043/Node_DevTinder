@@ -1,148 +1,17 @@
 const express = require("express");
 const connectDB = require("./config/database.js");
-const User = require("./models/user.js");
-const { validateSignUpData } = require("./utils/validation.js");
-const bcrypt = require("bcryptjs");
 const cookieParser = require("cookie-parser");
-const jwt = require("jsonwebtoken");
-const { userAuth } = require("./middlewares/auth.js");
+const authRouter = require("./routes/auth.js");
+const profileRouter = require("./routes/profile.js");
+const requestRouter = require("./routes/request.js");
 
 const app = express();
 app.use(express.json()); // req/ res reading
 app.use(cookieParser()); // Working as cookie parser middleware
 
-// Signup API
-app.post("/signup", async (req, res) => {
-  try {
-    validateSignUpData(req); // first validate signup data
-    const { firstName, lastName, emailId, password } = req.body;
-    const passwordHash = await bcrypt.hash(password, 10); // Bcrypted password
-
-    const user = new User({
-      // Creating a new instance of the User model
-      firstName,
-      lastName,
-      emailId,
-      password: passwordHash,
-    });
-
-    await user.save();
-    res.send("User added successfully...!");
-  } catch (err) {
-    res.status(400).send("Error saving the " + err.message);
-  }
-});
-
-// Login API
-app.post("/login", async (req, res) => {
-  try {
-    const { emailId, password } = req.body;
-    const user = await User.findOne({ emailId: emailId });
-    if (!user) {
-      throw new Error("Invalid credentials");
-    }
-    const isPasswordMatch = await user.validatePassword(password);
-    if (isPasswordMatch) {
-      const token = await user.getJWT(); // Create a JWT token
-      res.cookie("token", token);  // Add JWT token to cookie and send the response back to the user
-      res.send("User logged In successfully");
-    } else {
-      throw new Error("Invalid credentials");
-    }
-  } catch (err) {
-    res.status(400).send("ERROR: " + err.message);
-  }
-});
-
-// Get user by email id
-app.get("/user", async (req, res) => {
-  const userEmail = req.body.emailId;
-  try {
-    // It will give only One match
-    const user = await User.findOne({ emailId: userEmail });
-    if (!user) {
-      res.status(404).send("User not found...!");
-    } else {
-      res.send(user);
-    }
-    // It will give all Matching records
-
-    // const users = await User.find({emailId: userEmail});
-    // if(users.length === 0){
-    //   res.status(404).send("User not found...!")
-    // }else{
-    //   res.send(users)
-    // }
-  } catch (err) {
-    res.status(400).send("Something went wrong...!");
-  }
-});
-
-// Feed api - GET /feed - Get all the users from the database
-app.get("/feed", async (req, res) => {
-  try {
-    const users = await User.find({}); // For {} --> empty means will fetch all documents lists
-    res.send(users);
-  } catch (err) {
-    res.status(400).send("Something went wrong...!");
-  }
-});
-
-// Delete user by userId. --> _id = userId
-app.delete("/delete", async (req, res) => {
-  const userId = req.body.userId;
-  try {
-    await User.findByIdAndDelete(userId); // findByIdAndDelete({_id=userId}) or findByIdAndDelete(userId) both are same
-    res.send("User deleted successfully...!");
-  } catch (err) {
-    res.status(400).send("Something went wrong...!");
-  }
-});
-
-// Profile api
-app.get("/profile", userAuth, async (req, res) => {
-  try {
-    const user = req.user;
-    res.send(user);
-  } catch (err) {
-    res.status(400).send("ERROR:-" + err.message);
-  }
-});
-
-// Send connection request api
-app.post("/sendConnectionRequest", userAuth, async(req, res) => {
-  const user = req.user;
-  // Sending a connection request
-  console.log("Sending a connection request....");
-  res.send(user.firstName + " sent a connection request.")
-})
-
-// Update user
-app.patch("/user/:userId", async (req, res) => {
-  const userId = req.params?.userId; // Getting userId from the url
-  const updateData = req.body;
-  try {
-    // update data sanitization and validation
-    const ALLOWED_FIELD_UPDATE = ["photoUrl", "job", "gender", "age", "skills"];
-    const isUpdatedAllowed = Object.keys(updateData).every((k) =>
-      ALLOWED_FIELD_UPDATE.includes(k),
-    );
-
-    if (!isUpdatedAllowed) {
-      throw new Error("For these fields update NOT allowed");
-    }
-    if (updateData.skills.length > 10) {
-      throw new Error("Skills can not be more than 10");
-    }
-
-    await User.findByIdAndUpdate({ _id: userId }, updateData, {
-      runValidators: true,
-    });
-    res.send("User updated successfully...!");
-  } catch (err) {
-    res.status(400).send("Something went wrong...!" + err.message);
-  }
-});
+app.use("/", authRouter);
+app.use("/", profileRouter);
+app.use("/", requestRouter);
 
 // MongoDB connction
 connectDB()
