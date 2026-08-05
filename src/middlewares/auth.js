@@ -3,7 +3,6 @@ const User = require("../models/user");
 
 const adminAuth = (req, res, next) => {
   // Logic to check req authorization
-  console.log("Admin auth is getting checked!!!");
   const token = "xyz";
   const isAuth = token === "xyz";
   if (!isAuth) {

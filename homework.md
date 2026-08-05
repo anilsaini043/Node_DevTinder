@@ -93,3 +93,8 @@
 - Create PATCH /profile/edit API
 - Create PATCH /profile/password API   ---> Forgot password API
 - Make sure you validate all data in every POST, PATCHm Api's
+- Created connectionReguest schema
+- Created send connectionReguest POST api.
+- Read about $or query in mongodb
+- schema.pre("save") function
+- What is indexes or compund indexes in mongoDb and advantage or disadvantage
