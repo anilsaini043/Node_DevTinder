@@ -98,3 +98,6 @@
 - Read about $or query in mongodb
 - schema.pre("save") function
 - What is indexes or compund indexes in mongoDb and advantage or disadvantage
+- Created accept or reject connection request api
+- Created Get all the pending connection request api for the loggedIn user
+- Used "ref and populate"
